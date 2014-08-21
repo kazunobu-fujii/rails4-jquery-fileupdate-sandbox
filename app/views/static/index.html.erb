@@ -1,0 +1,27 @@
+<%= form_for Profile.new, :html => { :multipart => true, :id => "fileupload" } do |f| %>
+<%= f.file_field :image %>
+<%= f.submit %>
+<% end %>
+
+<script>
+$(function () {
+	//$('#fileupload').fileupload();
+	
+    $('#fileupload').fileupload({
+        dataType: 'json',
+        done: function (e, data) {
+        	if( data.result.files != null) {
+	            $.each(data.result.files, function (index, file) {
+	                $('<p/>').text(file.url).appendTo(document.body);
+	                $('<img src="'+file.url+'">').appendTo(document.body);
+	            });
+	        } else {
+	        	file = data.result[0]
+                $('<p/>').text(file.url).appendTo(document.body);
+                $('<img src="'+file.url+'">').appendTo(document.body);
+	        }
+        }
+    });
+	
+});
+</script>
