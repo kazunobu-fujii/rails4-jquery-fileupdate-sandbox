@@ -9,6 +9,7 @@ $(function () {
 	//$('#fileupload').fileupload();
 	
     $('#fileupload').fileupload({
+    	replaceFileInput: false,
         dataType: 'json',
         done: function (e, data) {
         	if( data.result.files != null) {
