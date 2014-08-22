@@ -1,5 +1,6 @@
-<%= form_for Profile.new, :html => { :multipart => true, :id => "fileupload" } do |f| %>
-<%= f.file_field :image %>
+<%= form_for Profile.new, :html => { :multipart => true } do |f| %>
+<%= f.text_field :name %>
+<%= f.file_field :image, :id => "fileupload", "data-url" => image_profiles_path %>
 <%= f.submit %>
 <% end %>
 

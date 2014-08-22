@@ -32,15 +32,10 @@ class ProfilesController < ApplicationController
 
     respond_to do |format|
       if @profile.save
-        format.html {
-          p 'html'
-          render :json => [@profile.to_jq_upload].to_json,
-          :content_type => 'text/html',
-          :layout => false
-        }
-        format.json { p 'json';render json: {files: [@profile.to_jq_upload]}, status: :created, location: @profile }
+        format.html { redirect_to @profile, notice: 'Profile was successfully created.' }
+        format.json { render :show, status: :created, location: @profile }
       else
-        format.html { render action: "new" }
+        format.html { render :new }
         format.json { render json: @profile.errors, status: :unprocessable_entity }
       end
     end
@@ -70,6 +65,26 @@ class ProfilesController < ApplicationController
     end
   end
 
+  def image
+    @profile = Profile.new(params.require(:profile).permit(:image))
+
+    respond_to do |format|
+      if @profile.save
+        format.html {
+          p 'html'
+          render :json => [@profile.to_jq_upload].to_json,
+          :content_type => 'text/html',
+          :layout => false
+        }
+        format.json { p 'json';render json: {files: [@profile.to_jq_upload]}, status: :created, location: @profile }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @profile.errors, status: :unprocessable_entity }
+      end
+    end
+
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_profile
@@ -78,6 +93,6 @@ class ProfilesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def profile_params
-      params.require(:profile).permit(:image)
+      params.require(:profile).permit(:name, :image)
     end
 end

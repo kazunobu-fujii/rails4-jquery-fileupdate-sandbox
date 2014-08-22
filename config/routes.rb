@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :profiles
+  resources :profiles do
+    collection do
+      post 'image', to: 'profiles#image'
+    end
+  end
 
   root 'static#index'
 
